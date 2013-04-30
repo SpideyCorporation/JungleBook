@@ -1,11 +1,21 @@
+<?php
+session_start();
+// If user logged-in, redirect to the Home.
+if (isset($_SESSION["junglebook_login"]))
+{
+	header ("Location: /junglebook/home/");
+}
+?>
 <html>
 <head>
 <title>JungleBook</title>
+<script type = "text/javascript" src = "jquery-min.js"></script>
+<script type = "text/javascript" src = "junglebook.js"></script>
 </head>
 <body>
 	<h1>JungleBook</h1>
 	<br/>
-	<form method = "POST" action = "login.php">
+	<form method = "POST" action = "login/">
 		Username <input type = "text" name = "username">
 		<br/>
 		Password <input type = "password" name = "password">
@@ -13,19 +23,29 @@
 		<input type = "submit" value = "Roar In">
 	</form>
 	<br/><br/><br/><br/><br/>
-	<form method = "POST" action = "signup.php">
+	<form id = "form_signup" method = "POST" action = "signup/" onsubmit="return validateSignupForm()" >
 		First Name <input type = "text" name = "firstname">
 		<br/>
+		
 		Last Name <input type = "text" name = "lastname">
 		<br/>
+		
 		Email Address <input type = "text" name = "email">
 		<br/>
-		Username <input type = "text" name = "username">
+		
+		Username <input type = "text" name = "username" onblur = "validateUsername()">
+		<img id = "username_spinner" alt = "Loading.." src = "spinner.gif" style="display:none"/>
+		<a id = "username_message"> </a>
 		<br/>
-		Password <input type = "password" name = "password">
+		
+		Password <input type = "password" name = "password" onblur = "validatePassword()">
 		<br/>
-		Confirm Password <input type = "password" name = "conf_password">
+		
+		Confirm Password <input type = "password" name = "conf_password" onblur = "validatePassword()">
+		<a id = "password_message"> </a>
 		<br/>
+		
+		
 		<input type = "submit" value = "Sign Up">
 	</form>
 </body>
